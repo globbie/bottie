@@ -11,6 +11,12 @@ addons:
 compiler:
   - gcc
   - clang
+
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+
 before_script:
   - mkdir build
   - cd build
