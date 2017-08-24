@@ -1,2 +1,2 @@
 run:
-	./bottie.py --address=ipc:///var/run/bottie.socket --device=kettle,ipc:///var/run/kettle.socket --device=lip_service,ipc:///var/run/lip_service.socket
+	./bottie.py --address=ipc:///var/run/bottie.socket --device=kettle,ipc:///var/run/kettle.socket --device=light,ipc:///var/run/light.socket --device=lip_service,ipc:///var/run/lip_service.socket
