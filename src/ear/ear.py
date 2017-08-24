@@ -25,12 +25,9 @@ def main(options, args):
     pub_sock.bind(publish_to)
     ctrl_sock = context.socket(zmq.PULL)
     ctrl_sock.bind(control_by)
-    import time
     while True:
         print('Waiting...', flush=True)
-        time.sleep(1)
-        task = {'action' : 'capture', 'duration' : 5}
-        #task = ctrl_sock.recv_json()
+        task = ctrl_sock.recv_json()
         print('Task: %s' % task, flush=True)
         if task['action'] == 'capture':
             frame = capture_frame(task['duration'])
