@@ -1,7 +1,15 @@
 #!/usr/bin/env python3
 
 import optparse
+import sys
 import zmq
+
+def interpret(text):
+    if text == 'cold' or text == 'hot' or text == 'lets' or text == 'make':
+        return ('kettle', {'action' : 'stop' if text == 'cold' else 'start'})
+    if text == 'dark' or text == 'light':
+        return ('light', {'action' : 'stop' if text == 'dark' else 'start'})
+    return ('lip_service', {'action' : 'say', 'text' : 'Unknown command'})
 
 def main(options, args):
     address = options.ensure_value('address', None)
@@ -12,20 +20,23 @@ def main(options, args):
     sock = context.socket(zmq.PULL)
     sock.bind(address)
     for device_id, device_data in devices.items():
-        device_sock = context.socket(zmq.REQ)
+        device_sock = context.socket(zmq.PAIR)
         device_sock.connect(device_data['address'])
+        device_sock.RCVTIMEO = 3000  # receive timeout, ms
         device_data['socket'] = device_sock
     while True:
         task = sock.recv_json()
         print('Task: %s' % task, flush=True)
         text = task['input']
-        if 'turn on' in text or 'turn off' in text:
-            kettle = devices['kettle']
-            action = 'start' if 'turn on' in text else 'stop'
-            print('Sending "action:%s" to the kettle' % action, flush=True)
-            kettle['socket'].send_json({'action' : action})
-            reply = kettle['socket'].recv_json()
+        device_id, command = interpret(text)
+        device = devices[device_id]
+        print('Sending %s to the %s' % (command, device_id), flush=True)
+        device['socket'].send_json(command)
+        try:
+            reply = device['socket'].recv_json()
             print('Reply: %s' % reply, flush=True)
+        except:
+            print("Unexpected error: %s" % sys.exc_info()[0])
 
 def parse_device(option, opt, value, parser):
     devices = parser.values.ensure_value(option.dest, {})
