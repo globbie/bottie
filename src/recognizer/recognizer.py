@@ -38,7 +38,7 @@ def main(options, args):
     while True:
         print 'Waiting...'; sys.stdout.flush()
         data = sub_sock.recv_json()
-        frame = codecs.decode(data['frame'], 'base64')
+        frame = codecs.decode(bytes(data['frame']), 'base64')
         print 'Frame length: %s' % len(frame); sys.stdout.flush()
         recognized = recognize(frame, decoder)
         ctrl_sock.send_json({'input' : recognized})
