@@ -31,7 +31,7 @@ def main(options, args):
         print('Task: %s' % task, flush=True)
         if task['action'] == 'capture':
             frame = capture_frame(task['duration'])
-            pub_sock.send_json({'frame' : codecs.encode(frame, 'base64')})
+            pub_sock.send_json({'frame' : codecs.encode(frame, 'base64').decode('ascii')})
 
 if __name__ == '__main__':
     parser = optparse.OptionParser()
