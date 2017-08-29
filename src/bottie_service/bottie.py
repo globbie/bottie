@@ -9,7 +9,13 @@ def interpret(text):
         return ('kettle', {'action' : 'stop' if text == 'cold' else 'start'})
     if text == 'dark' or text == 'light':
         return ('light', {'action' : 'stop' if text == 'dark' else 'start'})
-    return ('lip_service', {'action' : 'say', 'text' : 'Unknown command'})
+    return ('lip_service', {'action' : 'say', 'text' : 'Sorry, I didn\'t understand you!'})
+
+def response_to_user(text, lip_service = None, **unknown_devices):
+    if lip_service:
+        lip_service['socket'].send_json({'action' : 'say', 'text' : text})
+    else:
+        print('Response to user: %s' % text)
 
 def main(options, args):
     address = options.ensure_value('address', None)
@@ -24,6 +30,8 @@ def main(options, args):
         device_sock.connect(device_data['address'])
         device_sock.RCVTIMEO = 3000  # receive timeout, ms
         device_data['socket'] = device_sock
+
+    response_to_user('At your service!', **devices)
     while True:
         task = sock.recv_json()
         print('Task: %s' % task, flush=True)
@@ -35,6 +43,8 @@ def main(options, args):
         try:
             reply = device['socket'].recv_json()
             print('Reply: %s' % reply, flush=True)
+            if device_id == 'kettle' and reply['status'] == 'OK':
+                response_to_user('The tea will be ready in 2 minutes', **devices)
         except:
             print("Unexpected error: %s" % sys.exc_info()[0])
 
@@ -46,7 +56,7 @@ def parse_device(option, opt, value, parser):
 if __name__ == '__main__':
     parser = optparse.OptionParser()
     parser.add_option('--address', dest='address',
-                      help='Publish audio fragments to the specified address')
+                      help='Bind to this address')
     parser.add_option('--device', action='callback', callback=parse_device,
                       metavar='<device_id>,<device_address>', type=str, nargs=1, dest='devices',
                       help='Register a device.  Option can be passed multiple times')
