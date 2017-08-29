@@ -6,3 +6,4 @@ run:
 install:
 	ln -s $(ROOT_DIR)/etc/systemd/system/recognizer.service /etc/systemd/system/recognizer.service
 	ln -s $(ROOT_DIR)/recognizer.py /usr/bin/recognizer.py
+	ln -s $(ROOT_DIR)/usr/share/recognizer /usr/share/recognizer
