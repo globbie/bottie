@@ -33,6 +33,7 @@ def main(options, args):
 
     response_to_user('At your service!', **devices)
     while True:
+        print('Waiting...', flush=True)
         task = sock.recv_json()
         print('Task: %s' % task, flush=True)
         text = task['input']
