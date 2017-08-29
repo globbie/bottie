@@ -2,7 +2,6 @@
 Description=Ear
 
 [Service]
-Type=forking
 ExecStart=/usr/bin/ear.py --publish_to=ipc:///var/run/ear.socket --control_by=ipc:///var/run/ear_ctrl.socket
 
 [Install]
