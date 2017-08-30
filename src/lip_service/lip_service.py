@@ -13,6 +13,7 @@ def main(options, args):
     sock = context.socket(zmq.PAIR)
     sock.bind(address)
     while True:
+        print 'Waiting...'; sys.stdout.flush()
         task = sock.recv_json()
         print 'Task: %s' % task; sys.stdout.flush()
         if task['action'] == 'say':
