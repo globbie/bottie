@@ -6,7 +6,7 @@ import optparse
 import pyaudio
 import zmq
 
-BITRATE = 44100
+BITRATE = 16000
 
 def wait_signal(stream):
     while True:

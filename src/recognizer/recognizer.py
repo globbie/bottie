@@ -24,8 +24,6 @@ def main(options, args):
 
     # Create a decoder with certain model
     config = Decoder.default_config()
-    config.set_float('-samprate', 44100.0)
-    config.set_int('-nfft', 2048)
     config.set_string('-hmm', os.path.join(model_dir, 'en-us/en-us'))
     config.set_string('-lm', os.path.join(model_dir, 'en-us/en-us.lm.bin'))
     config.set_string('-dict', os.path.join(model_dir, 'en-us/cmudict-en-us.dict'))
