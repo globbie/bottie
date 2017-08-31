@@ -9,7 +9,7 @@ def interpret(text):
         return ('kettle', {'action' : 'stop' if text == 'cold' else 'start'})
     if text == 'dark' or text == 'light':
         return ('light', {'action' : 'stop' if text == 'dark' else 'start'})
-    return ('lip_service', {'action' : 'say', 'text' : 'Sorry, I didn\'t understand you!'})
+    return ('lip_service', {'action' : 'say', 'text' : 'Sorry?'})
 
 def response_to_user(text, lip_service = None, **unknown_devices):
     if lip_service:
