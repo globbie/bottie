@@ -44,8 +44,10 @@ def main(options, args):
         try:
             reply = device['socket'].recv_json()
             print('Reply: %s' % reply, flush=True)
-            if device_id == 'kettle' and reply['status'] == 'OK':
+            if device_id == 'kettle' and command['action'] == 'start' and reply['status'] == 'OK':
                 response_to_user('The tea will be ready in 2 minutes', **devices)
+            elif reply['status'] == 'OK':
+                response_to_user('Okay', **devices)
         except:
             print("Unexpected error: %s" % sys.exc_info()[0])
 
