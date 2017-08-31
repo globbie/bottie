@@ -2,7 +2,7 @@
 Description=Bottie
 
 [Service]
-ExecStart=/usr/bin/bottie.py --address=ipc:///var/run/bottie.socket --device=kettle,ipc:///var/run/kettle.socket --device=lip_service,ipc:///var/run/lip_service.socket
+ExecStart=/usr/bin/bottie.py --address=ipc:///var/run/bottie.socket --device=kettle,ipc:///var/run/kettle.socket --device=light,ipc:///var/run/light.socket --device=lip_service,ipc:///var/run/lip_service.socket
 Restart=on-failure
 
 [Install]
