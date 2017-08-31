@@ -2,7 +2,6 @@
 Description=Lip Service
 
 [Service]
-Type=forking
 ExecStart=/usr/bin/lip_service.py --address=ipc:///var/run/lip_service.socket
 
 [Install]
