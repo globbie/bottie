@@ -14,7 +14,8 @@ def recognize(buf, decoder):
     decoder.start_utt()
     decoder.process_raw(buf, False, False)
     decoder.end_utt()
-    return decoder.hyp().hypstr
+    hyp = decoder.hyp()
+    return hyp.hypstr if hyp else ''
 
 def main(options, args):
     subscribe_to = options.ensure_value('subscribe_to', None)
