@@ -10,12 +10,14 @@ BITRATE = 16000
 
 def wait_signal(stream):
     while True:
-        raw_data = numpy.fromstring(stream.read(BITRATE // 4), dtype=numpy.int16)
-        if len([vol for vol in raw_data if vol > 30000]) > 0:
+        raw_data = numpy.fromstring(stream.read(BITRATE // 8, exception_on_overflow=False), dtype=numpy.int16)
+        vols = [vol for vol in raw_data if vol > 32000]
+        #print(vols, flush=True)
+        if len(vols) > 0:
             return
 
 def capture_frame(stream, nsec):
-    return stream.read(BITRATE * nsec)
+    return stream.read(BITRATE * nsec, exception_on_overflow=False)
 
 def main(options, args):
     publish_to = options.ensure_value('publish_to', None)
