@@ -3,6 +3,7 @@ Description=Ear
 
 [Service]
 ExecStart=/usr/bin/ear.py --publish_to=ipc:///var/run/ear.socket
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
