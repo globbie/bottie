@@ -3,6 +3,7 @@ Description=Lip Service
 
 [Service]
 ExecStart=/usr/bin/lip_service.py --address=ipc:///var/run/lip_service.socket
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target

@@ -3,6 +3,7 @@ Description=Voice Recognizer
 
 [Service]
 ExecStart=/usr/bin/recognizer.py --subscribe_to=ipc:///var/run/ear.socket --push_to=ipc:///var/run/bottie.socket --model_dir=/usr/share/recognizer/model
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
