@@ -2,7 +2,7 @@
 Description=Ear
 
 [Service]
-ExecStart=/usr/bin/ear.py --publish_to=ipc:///var/run/ear.socket
+ExecStart=/usr/bin/ear.py --publish_to=ipc:///var/run/ear.socket --control_by=ipc:///var/run/ear_ctrl.socket
 Restart=on-failure
 
 [Install]
