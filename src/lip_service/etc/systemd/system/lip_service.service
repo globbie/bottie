@@ -2,7 +2,7 @@
 Description=Lip Service
 
 [Service]
-ExecStart=/usr/bin/lip_service.py --address=ipc:///var/run/lip_service.socket
+ExecStart=/usr/bin/lip_service.py --address=ipc:///var/run/lip_service.socket --status_to=ipc:///var/run/ear_ctrl.socket
 Restart=on-failure
 
 [Install]
